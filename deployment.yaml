@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-dashboard
+spec:
+  replicas: 1  # Start with 1 pod for testing
+  selector:
+    matchLabels:
+      app: news-dashboard
+  template:
+    metadata:
+      labels:
+        app: news-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        image: news-dashboard:latest  # Must match your LOCAL image name
+        imagePullPolicy: Never  # Critical for local images
+        ports:
+        - containerPort: 8501  # Streamlit's default port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-dashboard-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: news-dashboard
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8501
