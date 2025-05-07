@@ -1,3 +1,7 @@
-# Use newer compatible versions
-transformers==4.36.2  # Updated version
-tokenizers==0.15.2    # Verified working version
+streamlit==1.29.0
+firebase-admin==6.2.0  # This was missing
+transformers==4.36.2
+tokenizers==0.15.2
+pandas==2.0.3
+plotly==5.18.0
+protobuf==3.20.3
